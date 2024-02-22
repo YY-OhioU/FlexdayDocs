@@ -76,8 +76,8 @@ There is no requirement on the names of the folders as long as the names are con
 This repository assumes the following structure of the dataset:
 
 ```bash
-> tree dataset_root
-dataset_root
+> tree sample_dataset_root
+sample_dataset_root
 ├── test
 │   ├── metadata.jsonl
 │   ├── {image_path0}
@@ -144,7 +144,7 @@ dataset_root
   result_path: "../result/"
   pretrained_model_name_or_path: "naver-clova-ix/donut-base-finetuned-cord-v2" # loading a pre-trained model from HuggingFace or path (official pre-trained Donut model)
   # pretrained_model_name_or_path: "../result/OU_pretrained" # loading a pre-trained model from HuggingFace or path (pre-trained on passport dataset)
-  dataset_name_or_paths: ["../dataset_root/sample_dataset/"] # loading datasets (from HuggingFace or path)
+  dataset_name_or_paths: ["../datasets/sample_dataset_root/"] # loading datasets (from HuggingFace or path)
   sort_json_key: False # cord dataset is preprocessed, and publicly available at https://huggingface.co/datasets/naver-clova-ix/cord-v2
   train_batch_sizes: [8]
   val_batch_sizes: [1]
