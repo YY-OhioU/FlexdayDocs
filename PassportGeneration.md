@@ -61,7 +61,7 @@ Also, the generated annotations don't meet the Donut's requirements.  `gt2donut.
 - Convert `ground_truth.jsonl` to Donut `metadata.jsonl`
   
   ```shell
-  python gt2donut -f ../dataset_root/train
-  python gt2donut -f ../dataset_root/test
-  python gt2donut -f ../dataset_root/validation
+  python gt2donut -f ../donut_solution/datasets/sample_dataset/train
+  python gt2donut -f ../donut_solution/datasets/sample_dataset/test
+  python gt2donut -f ../donut_solution/datasets/sample_dataset/validation
   ```
