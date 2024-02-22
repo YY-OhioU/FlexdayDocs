@@ -63,9 +63,10 @@ There is no requirement on the names of the folders as long as the names are con
 
 - donut: Source code folder
 
-- config_folder: Hold all the config .yaml files. This folder will be referred as `config_folder` in this manual
+- config_folder: Hold all the config .yaml files. This folder will be referred to as `config_folder` in this manual
 
-- dataset_root: Described in the next section. The root folder of datasets for training, testing and validation. (`dataset_root`)
+- dataset_root: Described in the next section. The root folder of datasets for training, testing, and validation. (referred to as `dataset_root`)
+  - In the package we provide, there's a dataset folder located at `datasets/sample_dataset`
 
 - result: Folder containing trained models and logs. (`result`)
 
@@ -76,8 +77,8 @@ There is no requirement on the names of the folders as long as the names are con
 This repository assumes the following structure of the dataset:
 
 ```bash
-> tree sample_dataset_root
-sample_dataset_root
+> tree sample_dataset
+sample_dataset
 ├── test
 │   ├── metadata.jsonl
 │   ├── {image_path0}
@@ -144,7 +145,7 @@ sample_dataset_root
   result_path: "../result/"
   pretrained_model_name_or_path: "naver-clova-ix/donut-base-finetuned-cord-v2" # loading a pre-trained model from HuggingFace or path (official pre-trained Donut model)
   # pretrained_model_name_or_path: "../result/OU_pretrained" # loading a pre-trained model from HuggingFace or path (pre-trained on passport dataset)
-  dataset_name_or_paths: ["../datasets/sample_dataset_root/"] # loading datasets (from HuggingFace or path)
+  dataset_name_or_paths: ["../datasets/sample_dataset/"] # loading datasets (from HuggingFace or path)
   sort_json_key: False # cord dataset is preprocessed, and publicly available at https://huggingface.co/datasets/naver-clova-ix/cord-v2
   train_batch_sizes: [8]
   val_batch_sizes: [1]
