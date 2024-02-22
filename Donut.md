@@ -2,11 +2,11 @@
 
 ## Installation
 
-Donut can be installed in either an conda environment or in a naive python environment. It is recommended to install Donut in a virtualized environment because some of its dependencies are older.
+Donut can be installed in either a conda environment or in a naive Python environment. It is recommended to install Donut in a virtualized environment because some of its dependencies are older.
 
 ### dependencies
 
-  Donut needs to work with these specific versions of dependencies. The weights in pretrained models have the same shape with the models implemented in these exact versions.
+  Donut needs to work with these specific versions of dependencies. The weights in pre-trained models have the same shape as the models implemented in these exact versions.
 
 - Pytorch:  Tested version (2.1.0)   
    Follow the instructions on the official website of PyTorch to install PyTorch to the environment.
@@ -28,7 +28,7 @@ Donut can be installed in either an conda environment or in a naive python envir
   
   Details of the modifications can be found in this Github Issue: [https://github.com/clovaai/donut/issues/175](https://github.com/clovaai/donut/issues/175)
 
-- Install Donut as a python library
+- Install Donut as a Python library
   
   ```bash
   cd donut && pip install . 
@@ -38,9 +38,10 @@ Donut can be installed in either an conda environment or in a naive python envir
   
   The `pytorch-lightning` required by Donut is compatible with the older version of pytorch, which will cause the program to crash during training. Therefore, it is necessary to modify the `pytorch-lightning` package installed in the environment for this project.  [https://github.com/clovaai/donut/issues/255](https://github.com/clovaai/donut/issues/255)
   
-  - Fix problem during training:
+  - Fix problems during training:
     
-    - Find file in site-packages in current environment: ```pytorch_lightning/utilities/types.py```
+    - Find the file in `site-packages` in the current environment: `pytorch_lightning/utilities/types.py`
+      - `site-packages` is the directory where packages in a Python environment are installed.
     
     - In this file locate
       
@@ -72,7 +73,7 @@ There is no requirement on the names of the folders as long as the names are con
 
 ### Dataset
 
-This repository assumes the following structure of dataset:
+This repository assumes the following structure of the dataset:
 
 ```bash
 > tree dataset_root
@@ -105,9 +106,9 @@ dataset_root
 
 - The structure of `metadata.jsonl` file is in `JSON Lines text format`([https:://jsonlines.org](https://jsonlines.org)), i.e., `.jsonl`. Each line consists of
   
-  - `file_name` : relative path to the image file.
+  - `file_name`: relative path to the image file.
   
-  - `ground_truth` : string format (json dumped), the dictionary contains `gt_parse`.
+  - `ground_truth`: string format (JSON dumped), the dictionary contains `gt_parse`.
     
     Sample code to generate one line in metadata.jsonl:
     
@@ -128,26 +129,27 @@ dataset_root
       "ground_truth": "{\"gt_parse\": {\"p_id\": \"passport_id\", \"first_name\": \"First\", \"last_name\": \"Last\", \"dob\": \"DateOfBirth\", \"date_of_issue\": \"DateIssued\", \"place_of_birth\": \"PlaceOfBirth\", \"valid_through\": \"ExpireDate\", \"gender\": \"Gender\"}}"}
       ```
 
-- `donut` interprets all tasks as a JSON prediction problem. As a result, all `donut` model training share a same pipeline. For training and inference, the only thing to do is preparing `gt_parse` or `gt_parses` for the task in format described below.
+- `donut` interprets all tasks as a JSON prediction problem. As a result, all `donut` model training share the same pipeline. For training and inference, the only thing to do is to prepare `gt_parse` or `gt_parses` for the task in the format described below.
 
 ### Training
 
-- Edit config file
+- Edit the config file
   
-  `sample_config.yaml` this is an example yaml file to train from Donut's official pretrained model.
+  `sample_config.yaml` is an example yaml file to train from Donut's official pre-trained model.
   
   Place `sample_config.yaml` under `config_folder` 
   
   ```yaml
-  # resume_from_checkpoint_path: null # only used for resume_from_checkpoint option in PL
-  resume_from_checkpoint_path: "<path to the checkpoint (normally use the `result` folder of last training)>"  # only used for resume_from_checkpoint option in PL
-  result_path: "<path to result>"
-  pretrained_model_name_or_path: "naver-clova-ix/donut-base-finetuned-cord-v2" # loading a pre-trained model (from moldehub or path)
-  dataset_name_or_paths: ["<path to dataset>"] # loading datasets (from moldehub or path)
+  resume_from_checkpoint_path: null # only used for resume_from_checkpoint option in PL
+  result_path: "../result/"
+  pretrained_model_name_or_path: "naver-clova-ix/donut-base-finetuned-cord-v2" # loading a pre-trained model from HuggingFace or path (official pre-trained Donut model)
+  # pretrained_model_name_or_path: "../result/OU_pretrained" # loading a pre-trained model from HuggingFace or path (pre-trained on passport dataset)
+  dataset_name_or_paths: ["../dataset_root/sample_dataset/"] # loading datasets (from HuggingFace or path)
   sort_json_key: False # cord dataset is preprocessed, and publicly available at https://huggingface.co/datasets/naver-clova-ix/cord-v2
   train_batch_sizes: [8]
   val_batch_sizes: [1]
-  input_size: [1280, 960 ] # when the input resolution differs from the pre-training setting, some weights will be newly initialized (but the model training would be okay)
+  # input_size: [1075, 761]
+  input_size: [1280, 960 ] # When the input resolution differs from the pre-training setting, some weights will be newly initialized (but the model training would be okay)
   max_length: 768
   align_long_axis: False
   num_nodes: 1
@@ -159,39 +161,39 @@ dataset_root
   max_steps: -1
   num_workers: 8
   val_check_interval: 1.0
-  check_val_every_n_epoch: 10
+  check_val_every_n_epoch: 2
   gradient_clip_val: 1.0
-  verbose: False
+  verbose: False  # Set to True if detailed predictions and ground truth during validation are wanted.
   ```
 
 - Train
   
-  Under `donut` folder, execute the following commands
+  Under the `donut` folder, execute the following commands
   
   `python train.py --config ../config_folder/sample_config.yaml  --exp_version "version_1"`
   
-  After training, you can find the trained model and logs in `<path to result>/<config_name>/<exp_version>` in our example, the folder is `result/sample_config/version_1`
+  After training, you can find the trained model and the logs in `<path to result>/<config_name>/<exp_version>`. In our example, the folder is `result/sample_config/version_1`
 
 - Testing
   
-  Under `donut` folder, execute the following commands
+  Under the `donut` folder, execute the following commands
   
   `python test.py --pretrained_model_name_or_path result/sample_config/version_1 --dataset_name_or_path <path to dataset> --task_name <test_name> --save_path <file to save>`
   
-  `file to save` should points to a file instead of a folder.
+  `file to save` should point to a regular text file to which the results are written. The script will create the file if the file doesn't exist.
   
   Then the report for testing can be found in `<file to save>`
   
-  By default, testing is performed on test dataset, but you can change it to `train` or `validataion` by adding an extra argument `-split`.  Eg: add `-split train` to test on `dataset_root/train` 
+  By default, testing is performed on the test dataset, but you can change it to `train` or `validation` by adding an extra argument `-split`.  Eg: add `-split train` to test on `dataset_root/train` 
 
 - Process a single image:
   
-  `python custom_test.py --pretrained_path <pretrained model path> --input <input image path>`
+  `python inference_one.py --pretrained_path <pretrained model path> --input <input image path>`
   
-  The `result` folder can be used as`<pretrained model path>` 
+  The `result` folder can be used as `<pretrained model path>` 
   
-  - This example uses the model pretrained by OU team to process an image:
+  - This example uses the model pre-trained by OU team to process an image:
     
-    `python custom_test.py --pretrained_path ../OU_model --input<input image path>`
+    `python inference_one.py --pretrained_path ../OU_model --input<input image path>`
 
 
