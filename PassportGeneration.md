@@ -53,9 +53,9 @@ Also, the generated annotations don't meet the Donut's requirements.  `gt2donut.
 - Generate data
   
   ```shell
-  python main.py -n <number of samples> -o ../dataset_root/train
-  python main.py -n <number of samples> -o ../dataset_root/test
-  python main.py -n <number of samples> -o ../dataset_root/validation
+  python main.py -n <number of samples> -o ../donut_solution/datasets/sample_dataset/train -a
+  python main.py -n <number of samples> -o ../donut_solution/datasets/sample_dataset/test -a
+  python main.py -n <number of samples> -o ../donut_solution/datasets/sample_dataset/validation -a
   ```
 
 - Convert `ground_truth.jsonl` to Donut `metadata.jsonl`
