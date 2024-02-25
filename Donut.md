@@ -32,8 +32,8 @@ Donut can be installed in either a conda environment or in a naive Python enviro
 - Install Donut as a Python library
   
   ```bash
-  cd Flexday_deliver/donut_solution
-  cd donut && pip install . 
+  cd Flexday_deliver/donut_solution/donut
+  pip install . 
   ```
 
 - dependencies fix:
