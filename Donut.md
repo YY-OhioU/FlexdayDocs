@@ -22,7 +22,8 @@ Donut can be installed in either a conda environment or in a naive Python enviro
 
 ### Donut
 
-- Download the provided Donut code
+- Find the source code of Donut
+  Unzip the zip package. The source code is in the directory: `Flexday_deliver/donut_solution/donut` (the folder with `setup.py`)
   
   There are some changes made to the original Donut code. 
   
@@ -31,6 +32,7 @@ Donut can be installed in either a conda environment or in a naive Python enviro
 - Install Donut as a Python library
   
   ```bash
+  cd Flexday_deliver/donut_solution
   cd donut && pip install . 
   ```
 
@@ -59,11 +61,11 @@ Donut can be installed in either a conda environment or in a naive Python enviro
 
 ### Necessary folders:
 
-There is no requirement on the names of the folders as long as the names are consistent with the names used in the commands. But for the sake of simplicity, this manual will use the name listed below:
+There is no requirement on the names of the folders as long as the names are consistent with the names used in the commands and YAML files. But for the sake of simplicity, this manual will use the name listed below:
 
 - donut: Source code folder
 
-- config_folder: Hold all the config .yaml files. This folder will be referred to as `config_folder` in this manual
+- config_folder: Holds all the config .yaml files. This folder will be referred to as `config_folder` in this manual
 
 - dataset_root: Described in the next section. The root folder of datasets for training, testing, and validation. (referred to as `dataset_root`)
   - In the package we provide, there's a dataset folder located at `datasets/sample_dataset`
@@ -143,8 +145,8 @@ sample_dataset
   ```yaml
   resume_from_checkpoint_path: null # only used for resume_from_checkpoint option in PL
   result_path: "../result/"
-  pretrained_model_name_or_path: "naver-clova-ix/donut-base-finetuned-cord-v2" # loading a pre-trained model from HuggingFace or path (official pre-trained Donut model)
-  # pretrained_model_name_or_path: "../result/OU_pretrained" # loading a pre-trained model from HuggingFace or path (pre-trained on passport dataset)
+  pretrained_model_name_or_path: "naver-clova-ix/donut-base-finetuned-cord-v2" # loading a pre-trained model from HuggingFace(official pre-trained Donut model)
+  # pretrained_model_name_or_path: "../OU_model" # loading a pre-trained model (pre-trained on passport dataset)
   dataset_name_or_paths: ["../datasets/sample_dataset/"] # loading datasets (from HuggingFace or path)
   sort_json_key: False # cord dataset is preprocessed, and publicly available at https://huggingface.co/datasets/naver-clova-ix/cord-v2
   train_batch_sizes: [8]
@@ -173,7 +175,7 @@ sample_dataset
   
   `python train.py --config ../config_folder/sample_config.yaml  --exp_version "version_1"`
   
-  After training, you can find the trained model and the logs in `<path to result>/<config_name>/<exp_version>`. In our example, the folder is `result/sample_config/version_1`
+  After training, you can find the trained model and the logs in `<path to result>/<config_name>/<exp_version>`. In our example, the folder is `Flexday_deliver/donut_solution/result/sample_config/version_1`
 
 - Testing
   
