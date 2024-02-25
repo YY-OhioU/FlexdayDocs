@@ -6,9 +6,9 @@
 
 `pip install -r requirements.txt`
 
-### Download source code
+### Find source code
 
-`unzip passport_generator.zip`
+`cd Flexday_deliver/Passport-Generator`
 
 ## Usage
 
