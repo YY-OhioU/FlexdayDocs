@@ -47,7 +47,7 @@ Also, the generated annotations don't meet the Donut's requirements.  `gt2donut.
   ```shell
   mkdir dataset_root
   cd dataset_root
-  mkdir train, test, validation
+  mkdir train test validation
   ```
 
 - Generate data
