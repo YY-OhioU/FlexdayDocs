@@ -20,7 +20,7 @@ Code will generate images with annotations.
 Annotations will be organized in a json lines format in `ground_truth.jsonl`
 
 ```plaintext
-usage: python main.py [-h] [-n NUMBER] [-o OUTPUT] [-b]
+usage: python main.py [-h] [-n NUMBER] [-o OUTPUT] [-b] [-s] [-r] [-p]
 
 Generate fake passport images
 
@@ -31,7 +31,10 @@ options:
   -o OUTPUT, --output OUTPUT
                         output directory
   -b, --bbox            draw bounding boxes
-  -a, --augment         Augment data. Perform transformations to images
+  -s, --scaling         Scale image
+  -r, --rotation        Rotation
+  -p, --projection      Apply projection
+
 ```
 
 `OUTPUT` folder needs to be created before the execution of this script
@@ -53,9 +56,9 @@ Also, the generated annotations don't meet the Donut's requirements.  `gt2donut.
 - Generate data
   
   ```shell
-  python main.py -n <number of samples> -o ../donut_solution/datasets/sample_dataset/train -a
-  python main.py -n <number of samples> -o ../donut_solution/datasets/sample_dataset/test -a
-  python main.py -n <number of samples> -o ../donut_solution/datasets/sample_dataset/validation -a
+  python main.py -n <number of samples> -o ../donut_solution/datasets/sample_dataset/train -sr
+  python main.py -n <number of samples> -o ../donut_solution/datasets/sample_dataset/test -sr
+  python main.py -n <number of samples> -o ../donut_solution/datasets/sample_dataset/validation -sr
   ```
 
 - Convert `ground_truth.jsonl` to Donut `metadata.jsonl`

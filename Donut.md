@@ -27,7 +27,7 @@ Donut can be installed in either a conda environment or in a naive Python enviro
   
   There are some changes made to the original Donut code. 
   
-  Details of the modifications can be found in this Github Issue: [https://github.com/clovaai/donut/issues/175](https://github.com/clovaai/donut/issues/175)
+  Details of the modifications can be found in this GitHub Issue: [https://github.com/clovaai/donut/issues/175](https://github.com/clovaai/donut/issues/175)
 
 - Install Donut as a Python library
   
@@ -43,6 +43,7 @@ Donut can be installed in either a conda environment or in a naive Python enviro
   - Fix problems during training:
     
     - Find the file in `site-packages` in the current environment: `pytorch_lightning/utilities/types.py`
+      
       - `site-packages` is the directory where packages in a Python environment are installed.
     
     - In this file locate
@@ -63,12 +64,13 @@ Donut can be installed in either a conda environment or in a naive Python enviro
 
 There is no requirement on the names of the folders as long as the names are consistent with the names used in the commands and YAML files. But for the sake of simplicity, this manual will use the name listed below:
 
-- donut: Source code folder
+- donut: Source code
 
 - config_folder: Holds all the config .yaml files. This folder will be referred to as `config_folder` in this manual
 
 - dataset_root: Described in the next section. The root folder of datasets for training, testing, and validation. (referred to as `dataset_root`)
-  - In the package we provide, there's a dataset folder located at `datasets/sample_dataset`
+  
+- In the package we provide, there's a dataset folder located at `datasets/sample_dataset`
 
 - result: Folder containing trained models and logs. (`result`)
 
@@ -125,7 +127,7 @@ sample_dataset
         f.write(json.dumps(line_dict))
     ```
     
-    - Example: 
+    - Example of one row in metadata.jsonl: 
       
       ```json
       {"file_name": "img0.png", 
@@ -171,17 +173,17 @@ sample_dataset
 
 - Train
   
-  Under the `donut` folder, execute the following commands
+  In the `donut` folder, execute the following commands
   
-  `python train.py --config ../config_folder/sample_config.yaml  --exp_version "version_1"`
+  `python train.py --config ../config_folder/sample_config.yaml  --exp_version "version_1" --task_name donut_passport`
   
   After training, you can find the trained model and the logs in `<path to result>/<config_name>/<exp_version>`. In our example, the folder is `Flexday_deliver/donut_solution/result/sample_config/version_1`
 
 - Testing
   
-  Under the `donut` folder, execute the following commands
+  In the `donut` folder, execute the following commands
   
-  `python test.py --pretrained_model_name_or_path result/sample_config/version_1 --dataset_name_or_path <path to dataset> --task_name <test_name> --save_path <file to save>`
+  `python test.py --pretrained_model_name_or_path result/sample_config/version_1 --dataset_name_or_path <path to dataset> --task_name donut_passport --save_path <file to save>`
   
   `file to save` should point to a regular text file to which the results are written. The script will create the file if the file doesn't exist.
   
@@ -193,10 +195,19 @@ sample_dataset
   
   `python inference_one.py --pretrained_path <pretrained model path> --input <input image path>`
   
-  The `result` folder can be used as `<pretrained model path>` 
+ If the trained model needs to be used as a checkpoint, the `results` folder can be used as a `<pretrained model path>` for future training.
   
   - This example uses the model pre-trained by OU team to process an image:
     
     `python inference_one.py --pretrained_path ../OU_model --input<input image path>`
+
+### Notice
+- `task_name` and `task_start_token`
+
+  Donut network's language decoder needs a special token as a prompt. This token can be anything as long as it is consistent during training and testing.
+
+  Both `train.py` and `test.py` assemble the start token from the `task_name` variable read from the command line.
+
+  Currently, the model is trained with the `task name` being ***donut_passport***
 
 
