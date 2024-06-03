@@ -1,5 +1,9 @@
 # Preprocessing scripts
-We provide scripts to perform image registration. Ths scripts are put in the folder named `preprocessing_tools`.
+We provide scripts to perform image registration. Ths scripts are put in the folder named `preprocessing_tools`. 
+
+Codes are modified from this article: https://www.sicara.fr/blog-technique/2019-07-16-image-registration-deep-learning
+
+The scripts work in most cases. But there exists cases where the scripts failed completely or generate very bad result.
 
 ## File structure
 ```text

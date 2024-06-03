@@ -179,27 +179,28 @@ sample_dataset
   
   After training, you can find the trained model and the logs in `<path to result>/<config_name>/<exp_version>`. In our example, the folder is `Flexday_deliver/donut_solution/result/sample_config/version_1`
 
-- Testing
+### Testing
+- Test on dataset
   
-  In the `donut` folder, execute the following commands
+  In the `donut` folder, execute the following commands to test the model trained with the command from the "Training" section.
   
-  `python test.py --pretrained_model_name_or_path result/sample_config/version_1 --dataset_name_or_path <path to dataset> --task_name donut_passport --save_path <file to save>`
+  `python test.py --pretrained_model_name_or_path ../result/sample_config/version_1 --dataset_name_or_path <path to dataset> --task_name donut_passport --save_path <file to save>`
   
   `file to save` should point to a regular text file to which the results are written. The script will create the file if the file doesn't exist.
   
   Then the report for testing can be found in `<file to save>`
   
-  By default, testing is performed on the test dataset, but you can change it to `train` or `validation` by adding an extra argument `-split`.  Eg: add `-split train` to test on `dataset_root/train` 
+  By default, testing is performed on the test dataset, but you can change it to `train` or `validation` by adding an extra argument `-split`.  Eg: add `-split train` to test on `dataset_root/train`
 
-- Process a single image:
+  To test our pretrained model, replace "../result/sample_config/version_1" with "../OU_Model".
+
+- Inference on a single image:
   
   `python inference_one.py --pretrained_path <pretrained model path> --input <input image path>`
   
- If the trained model needs to be used as a checkpoint, the `results` folder can be used as a `<pretrained model path>` for future training.
-  
-  - This example uses the model pre-trained by OU team to process an image:
+  - The following example uses the model trained by OU team to process an image:
     
-    `python inference_one.py --pretrained_path ../OU_model --input<input image path>`
+    `python inference_one.py --pretrained_path ../OU_model --input ../sample_input.png`
 
 ### Notice
 - `task_name` and `task_start_token`
